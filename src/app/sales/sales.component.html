@@ -1,0 +1,140 @@
+<div>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Sales</li>
+    </ol>
+  </nav>
+
+  <div class="text-end">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">
+      Add
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+
+        <form [formGroup]="formdata" (ngSubmit)="save(formdata.value)">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Add Sale</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-5">
+                <label class="form-label">Client<span class="text-danger">*</span></label>
+                <div class="row">
+                  <div class="col-md-10">
+                    <select class="form-select" formControlName="clientid">
+                      <option selected value="0">Select</option>
+                      <option *ngFor="let client of clients" value="{{client.id}}">{{client.name}}</option>
+                    </select>
+                  </div>
+
+                </div>
+                <div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 mt-4">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover border-dark shadow-lg p-3 mb-5"
+                  *ngIf="saledetails.length > 0">
+                  <thead>
+                    <tr>
+                      <th style="width: 10%;">Sr.No</th>
+                      <th style="width: 30%;">Product</th>
+                      <th style="width: 10%;">Quantity</th>
+                      <th style="width: 20%;">Price</th>
+                      <th style="width: 20%;">Total</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let field of saledetails; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td><select class="form-select " [(ngModel)]="saledetails[i].productid"
+                          [ngModelOptions]="{standalone: true}">
+                          <option selected value="0">Select</option>
+                          <option *ngFor="let product of products" value="{{product.id}}">{{product.name}}</option>
+                        </select></td>
+                      <td><input class="form-control" type="text" [(ngModel)]="saledetails[i].quantity"
+                          [ngModelOptions]="{standalone: true}" (input)="valueChanged(i)" placeholder="0"></td>
+                      <td><input class="form-control" type="text" [(ngModel)]="saledetails[i].price"
+                          [ngModelOptions]="{standalone: true}" (input)="valueChanged(i)" placeholder="0"></td>
+                      <td><input class="form-control" type="text" [(ngModel)]="saledetails[i].total"
+                          [ngModelOptions]="{standalone: true}"></td>
+                      <td>
+                        <button class="btn btn-danger" (click)="deleteFieldValue(i)">Delete</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>
+                          <button class="btn btn-success" type="button" (click)="add(1)">Add</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="row justify-content-end">
+                <div class="col-md-3 text-end">
+                  <div>
+                    <span>Total = </span>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <input type="text" class="form-control" formControlName="billamount">
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="!formdata.value">Save</button>
+          </div>
+        </form>
+
+
+      </div>
+    </div>
+  </div>
+  <main class="content">
+    <div class="row p-3 bg-white">
+      <table class="table table-light mt-3 table-white">
+        <thead>
+          <tr>
+            <th>Sr.no</th>
+            <th>Action</th>
+            <th>Client Name</th>
+            <th>Total</th>
+            <th>Print</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of results; let i = index">
+            <td>{{ i + 1}}</td>
+            <td>
+              <button type="button" class="btn btn-sm btn-primary">Edit</button>
+              <button type="button" class="btn btn-sm btn-danger ms-2">Delete</button>
+            </td>
+            <td>{{ data.client.name }}</td>
+            <td>{{ data.billamount }}</td>
+            <td><a class="btn btn-success" routerLink="/saledetails/{{data.clientid}}/{{data.id}}">Print</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+
+    </div>
+  </main>
+
+</div>

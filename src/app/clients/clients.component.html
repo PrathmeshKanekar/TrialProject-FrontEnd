@@ -1,0 +1,59 @@
+<div class="mt-2 ">
+  <nav aria-label="breadcrumb ">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Clients</li>
+    </ol>
+  </nav>
+
+  <div class="text-end">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Add
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form [formGroup]="formdata" (ngSubmit)="save(formdata.value)">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Add Client</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Name</label>
+              <input type="text" class="form-control" formControlName="name" placeholder="Name">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <table class="table table-light mt-3 table-white">
+    <thead>
+      <tr>
+        <th>Sr.no</th>
+        <th>Action</th>
+        <th>Client Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let client of clients; let i = index">
+        <td>{{ i + 1}}</td>
+        <td>
+          <button type="button" class="btn btn-sm btn-primary">Edit</button>
+          <button type="button" class="btn btn-sm btn-danger ms-2">Delete</button>
+        </td>
+        <td>{{ client.name }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,137 @@
+<div>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Sale Details</li>
+    </ol>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card" id="printtable">
+          <div class="card-body">
+            <div class="invoice-title">
+              <h4 class="float-end font-size-15">Invoice #DS0204 </h4>
+              <div>
+                <img src="../../assets/img/photos/igap.png" width="150" alt="">
+              </div>
+              <div class="text-muted">
+                <p class="mb-1">Rajarampuri 4th Lane, Kolhapur</p>
+                <p class="mb-1"><i class="uil uil-envelope-alt me-1"></i> igaptechnologies@.com</p>
+                <p><i class="uil uil-phone me-1"></i> 012-345-6789</p>
+              </div>
+            </div>
+
+            <hr class="my-2">
+
+            <div class="row">
+                  <div class="col-sm-6">
+                    <div class="text-muted">
+                      <h5 class="font-size-16 mb-3">Billed To:</h5>
+                      <h5 class="font-size-15 mb-2">{{client.name}}</h5>
+                      <p class="mb-1">4068 Post Avenue Newfolden, MN 56738</p>
+                      <p class="mb-1">{{client.name}}@gmail.com</p>
+                      <p>001-234-5678</p>
+                    </div>
+                  </div>
+                  <!-- end col -->
+                  <div class="col-sm-6">
+                    <div class="text-muted text-sm-end ">
+                      <div>
+                        <h5 class="font-size-15 mb-1">Invoice No:</h5>
+                        <p>#DZ0112</p>
+                      </div>
+                      <div class="mt-4">
+                        <h5 class="font-size-15 mb-1">Invoice Date:</h5>
+                        <p>12 Oct, 2020</p>
+                      </div>
+                      <div class="mt-4">
+                        <h5 class="font-size-15 mb-1">Order No:</h5>
+                        <p>#1123456</p>
+                      </div>
+                    </div>
+
+                <!-- end col -->
+              </div>
+
+            </div>
+            <!-- end row -->
+
+            <div class="py-2" *ngIf="saledetails">
+              <h5 class="font-size-15">Order Summary</h5>
+
+              <div class="table-responsive">
+                <table class="table align-middle table-nowrap table-centered mb-0" id="excel-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 70px;">No.</th>
+                      <th>Item</th>
+                      <th>Price</th>
+                      <th>Quantity</th>
+                      <th class="text-end" style="width: 120px;">Total</th>
+                    </tr>
+                  </thead><!-- end thead -->
+                  <tbody>
+                    <tr *ngFor="let saledetail of saledetails; let i = index">
+                      <th scope="row">{{ i + 1}}</th>
+                      <td>
+                        <div>
+                          <h5 class="text-truncate font-size-14 mb-1">{{saledetail.product.name}}</h5>
+                          <p class="text-muted mb-0">Watch, Black</p>
+                        </div>
+                      </td>
+                      <td>{{saledetail.price | currency:'INR'}}</td>
+                      <td>{{saledetail.quantity}}</td>
+                      <td class="text-end">{{saledetail.total | currency:'INR'}}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" colspan="4" class="text-end">Sub Total</th>
+                      <td class="text-end">{{sale.billamount | currency:'INR'}}</td>
+                    </tr>
+                    <!-- end tr -->
+                    <tr>
+                      <td colspan="3" rowspan="4" class="border-0 text-end tb-bg"> <img src="../../assets/img/photos/paid-red.png" alt="" width="180"></td>
+                      <th scope="row" class="border-0 text-end">
+                        Discount :</th>
+                      <td class="border-0 text-end">{{ 0.25 | percent}}</td>
+                    </tr>
+                    <!-- end tr -->
+                    <tr>
+                      <th scope="row" class="border-0 text-end">
+                        Shipping Charge :</th>
+                      <td class="border-0 text-end">{{0}}</td>
+                    </tr>
+                    <!-- end tr -->
+                    <tr>
+                      <th scope="row"  class="border-0 text-end">
+                        Tax :</th>
+                      <td class="border-0 text-end">{{ 0.16 | percent}}</td>
+                    </tr>
+                    <!-- end tr -->
+                    <tr>
+                      <th scope="row" class="border-0 text-end">Total :</th>
+                      <td class="border-0 text-end">
+                        <h4 class="m-0 fw-semibold">{{sale.billamount - 5000 + 20 + 4000 | currency:'INR'}}</h4>
+                      </td>
+                    </tr>
+                    <!-- end tr -->
+                  </tbody><!-- end tbody -->
+                </table><!-- end table -->
+              </div><!-- end table responsive -->
+              <div class="d-print-none mt-4">
+                <div class="float-end">
+                  <a class="btn btn-secondary me-1" (click)="print('printtable')"><i class="fa fa-print"></i></a>
+                  <button class="btn btn-success me-1" type="button" (click)="excel()"><i class="fa fa-file-excel"></i></button>
+                  <a href="#" class="btn btn-primary w-md">Send</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- end col -->
+    </div>
+  </div>
+
+
+</div>
